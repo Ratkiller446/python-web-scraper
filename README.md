@@ -1,11 +1,10 @@
-<!-- Space for project banner/logo image -->
+<div align="center">
+
+![Python Web Scraper Logo](./logo.png)
 
 # 🕷️ Python Web Scraper
 
-<div align="center">
-
-[![License](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
-[![Python](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) [![Python](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/)
 
 **Advanced Python web scraper with intelligent metadata extraction and recursive link following capabilities**
 
@@ -22,7 +21,7 @@ Whether you're conducting research, building datasets, or analyzing web content,
 ## ✨ Features
 
 - **🔍 Intelligent Content Extraction**: Automatically extracts page titles, descriptions, and main content
-- **🔗 Recursive Link Following**: Configurable depth-based crawling to discover and scrape related pages
+- **🔗 Recursive Link Following**: Configurable depth-based crawling to discover and scrape related pages  
 - **📊 Metadata Extraction**: Captures meta tags, Open Graph data, and other structured metadata
 - **⚡ Efficient Processing**: Built-in request throttling and error handling for reliable operation
 - **📝 Structured Output**: Clean, organized data output suitable for further processing
@@ -53,95 +52,130 @@ from web_scraper import WebScraper
 scraper = WebScraper(
     max_depth=2,
     delay=1.0,
-    follow_external_links=False
+    timeout=30
 )
 
 # Scrape with recursive link following
-results = scraper.scrape_recursive('https://example.com', max_pages=50)
-
-# Process results
-for url, data in results.items():
-    print(f"URL: {url}")
-    print(f"Title: {data['title']}")
-    print(f"Description: {data['description']}")
+data = scraper.scrape_recursive('https://example.com', max_depth=2)
+for page_data in data:
+    print(f"URL: {page_data['url']}")
+    print(f"Title: {page_data['title']}")
+    print(f"Content Length: {len(page_data['content'])}")
     print("---")
 ```
 
-### Extracting Specific Metadata
+### Custom Configuration
 
 ```python
 from web_scraper import WebScraper
 
-scraper = WebScraper()
-data = scraper.scrape('https://example.com')
+# Configure scraper with custom parameters
+scraper = WebScraper(
+    user_agent='Custom Bot 1.0',
+    max_retries=3,
+    delay=2.0,
+    timeout=45
+)
 
-# Access extracted metadata
-print(f"Page Title: {data.get('title')}")
-print(f"Meta Description: {data.get('meta_description')}")
-print(f"Links Found: {len(data.get('links', []))}")
-print(f"Images: {data.get('images')}")
+# Scrape with custom settings
+result = scraper.scrape('https://target-website.com')
 ```
 
-## 📋 Requirements
+## 📦 Installation
 
-- **Python**: 3.6 or higher
-- **Dependencies**:
-  - `requests` - HTTP library for making web requests
-  - `beautifulsoup4` - HTML parsing and navigation
-  - `lxml` - Fast XML and HTML parser
-  - `urllib3` - HTTP client (typically included with requests)
+### Prerequisites
 
-### Installation
+- Python 3.6 or higher
+- pip package manager
+
+### Installing Dependencies
 
 ```bash
 # Clone the repository
 git clone https://github.com/Ratkiller446/python-web-scraper.git
 cd python-web-scraper
 
-# Install dependencies
+# Install required packages
+pip install requests beautifulsoup4 lxml
+```
+
+### Alternative Installation
+
+```bash
+# Install dependencies manually
 pip install -r requirements.txt
 ```
 
-## 🤝 Contribution
+### Usage
 
-Contributions are welcome and greatly appreciated! Here's how you can contribute:
+```bash
+# Run the scraper
+python web_scraper.py
+```
 
-1. **Fork the Repository**: Click the 'Fork' button at the top right of this page
-2. **Create a Feature Branch**: 
-   ```bash
-   git checkout -b feature/AmazingFeature
-   ```
-3. **Make Your Changes**: Implement your feature or bug fix
-4. **Commit Your Changes**: 
-   ```bash
-   git commit -m 'Add some AmazingFeature'
-   ```
-5. **Push to the Branch**: 
-   ```bash
-   git push origin feature/AmazingFeature
-   ```
-6. **Open a Pull Request**: Submit your changes for review
+## 🔧 Configuration
 
-### Contribution Guidelines
+The scraper can be configured with various parameters:
 
-- Write clear, commented code
-- Follow PEP 8 style guidelines
-- Add tests for new features
-- Update documentation as needed
-- Be respectful and constructive in discussions
+- `max_depth`: Maximum depth for recursive crawling (default: 1)
+- `delay`: Delay between requests in seconds (default: 1.0)  
+- `timeout`: Request timeout in seconds (default: 30)
+- `max_retries`: Maximum number of retry attempts (default: 3)
+- `user_agent`: Custom User-Agent string for requests
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Make your changes** and add tests if applicable
+4. **Commit your changes**: `git commit -m 'Add amazing feature'`
+5. **Push to the branch**: `git push origin feature/amazing-feature`
+6. **Open a Pull Request**
+
+### Development Setup
+
+```bash
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/python-web-scraper.git
+cd python-web-scraper
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install development dependencies
+pip install -r requirements.txt
+```
+
+## 📋 Requirements
+
+- `requests`: HTTP library for making web requests
+- `beautifulsoup4`: HTML/XML parsing library
+- `lxml`: Fast XML and HTML parser
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+- **Connection Timeouts**: Increase the timeout parameter or check network connectivity
+- **Rate Limiting**: Increase the delay between requests
+- **Blocked Requests**: Try using different User-Agent strings or rotating proxies
+- **Memory Issues**: Process data in smaller batches or implement streaming
+
+### Getting Help
+
+- Check the [Issues](https://github.com/Ratkiller446/python-web-scraper/issues) page for known problems
+- Create a new issue with detailed information about your problem
+- Include error messages, code examples, and expected behavior
 
 ## 📄 License
 
-This project is licensed under the **BSD 2-Clause License** - see the [LICENSE](LICENSE) file for details.
-
-The BSD 2-Clause License is a permissive license that allows you to freely use, modify, and distribute this software, as long as you include the original copyright notice and disclaimer.
+This project is licensed under the BSD 2-Clause License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 <div align="center">
-
-**Built with ❤️ by the Python Web Scraper Team**
-
-[Report Bug](https://github.com/Ratkiller446/python-web-scraper/issues) · [Request Feature](https://github.com/Ratkiller446/python-web-scraper/issues)
-
+  <sub>Built with ❤️ for the web scraping community</sub>
 </div>
